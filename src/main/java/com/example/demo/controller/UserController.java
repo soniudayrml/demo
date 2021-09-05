@@ -1,0 +1,32 @@
+package com.example.demo.controller;
+
+import com.example.demo.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.model.User;
+
+@RestController
+public class UserController {
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/user")
+    public User getUser(@RequestParam(value = "firstname") String firstname,
+                        @RequestParam(value = "lastname") String lastname,
+                        @RequestParam(value = "age") int age){
+        User user=new User();
+        user.setFirstName(firstname);
+        user.setLastName(lastname);
+        user.setAge(age);
+        return  user;
+    }
+    @PostMapping("/user")
+    public User postUser(User user){
+        System.out.println("User firstname:"+user.getFirstName());
+        userService.save(user);
+        return user;
+    }
+}
